@@ -1,0 +1,46 @@
+<!-- 인스턴스 유효 범위와 지역컴포넌트, 전역 컴포넌트 간 관게 확인하기 2019_05_18 -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Vue Component</title>
+</head>
+
+<body>
+    <div id="app">
+        <h3>첫 번째 인스턴스 영역</h3>
+        <my-global-component></my-global-component>
+        <my-local-component></my-local-component>
+        <!--지역 컴포넌트는 HTML 사용자 정의 태그로 인식 된다.-->
+    </div>
+    <hr>
+    <div id="app2">
+        <h3>두 번째 인스턴스 영역</h3>
+        <my-global-component></my-global-component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script>
+        Vue.component('my-global-component', {
+            template: '<div>전역 컴포넌트 입니다.</div>'
+        });
+        // 전역 컴포넌트 등록
+        var cmp = {
+            template: '<div>지역 컴포넌트 입니다.</div>'
+        };
+        // 지역 컴포넌트 내용
+        new Vue({
+            el: '#app',
+            components: {
+                'my-local-component': cmp
+            }
+        });
+        // 지역 컴포넌트 등록 : 지역 컴포넌트는 전역 컴포넌트와 달리 인스턴스에 components속성을 추가하고 등록해야함.\
+        new Vue({
+            el: "#app2"
+        });
+        //전역과 지역의 차이. 유효범위가 다르기 때문에 나타난다.
+    </script>
+</body>
+
+</html>
